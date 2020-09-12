@@ -37,6 +37,10 @@ password-db = passwd
 #인증된 사용자에 대해 저장소에 대한 권한 설정이 기록된 파일명(기본값)
 authz-db = authz
 ```
+### *** 1. error (line19 : Option expected error)
+```
+앞에 공백 다 제거해야함.
+```
 
 ### 2. conf/passwd
 ```
