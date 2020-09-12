@@ -2,7 +2,8 @@
 to me
 
 
-### SVN 저장소 to Ubuntu 18.04
+### SVN 저장소 to Ubuntu 18.04 
+### 설치
 sudo apt-get install -y subversion  
 svn // install test  
 svn --version // install test  
@@ -11,7 +12,9 @@ cd svn
 sudo svnadmin create --fs-type fsfs repos  
 cd repos  
 ls -lt  
-  
+
+
+### 설치 후 세팅  
 ### 1. conf/svnserv.conf
 ```yaml
 #인증되지않은(즉 계정이 없는) 사용자에 대해 접근
@@ -44,6 +47,18 @@ guest=r
 ```
 SVN_EDITOR=/usr/bin/vim
 export SVN_EDITOR
+```
+
+### 5. SVN 시작
+```
+sudo svnserve -d -r svn/repos
+```
+
+### 6. SVN 종료 및 재시작
+```
+ps -ef | grep svnserve
+kill -9 1684 1
+sudo svnserve -d -r svn/repos
 ```
 
 
