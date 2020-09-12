@@ -2,6 +2,13 @@
 https://zetawiki.com/wiki/Svnserve_%EC%8B%9C%EC%9E%91/%EC%A4%91%EC%A7%80
 https://zetawiki.com/wiki/CentOS_%EC%84%9C%EB%B8%8C%EB%B2%84%EC%A0%84_%EC%84%9C%EB%B2%84_%EC%84%A4%EC%B9%98_%EB%B0%8F_%EC%84%A4%EC%A0%95_(svn)
 
+### 포트
+```
+http:// 로 시작 하면 80번 포트를 열어야 합니다.
+https:// 로 시작하면 443번 포트를 열어야 합니다.
+svn:// 으로 시작하면 3690번 포트를 여셔야 합니다.
+svn+ssh:// 로 시작하면 22번포트를 여셔야 합니다.
+```
 
 ### SVN 저장소 to Ubuntu 18.04 
 ### 설치
