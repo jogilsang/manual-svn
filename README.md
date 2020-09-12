@@ -12,3 +12,17 @@ sudo svnadmin create --fs-type fsfs repos
 cd repos  
 ls -lt  
   
+### conf/svnserv.conf
+```conf
+#인증되지않은(즉 계정이 없는) 사용자에 대해 접근
+anon-access = read
+
+#인증된 사용자에 대해 쓰기 권한
+auth-access = write
+
+#인증된 사용자에 대한 계정 정보(아이디/패스) 정보가 기록된 파일명을 의미한다.(기본값 passwd)
+password-db = passwd
+
+#인증된 사용자에 대해 저장소에 대한 권한 설정이 기록된 파일명(기본값)
+authz-db = authz
+```
