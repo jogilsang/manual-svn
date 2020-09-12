@@ -73,4 +73,11 @@ kill -9 1684 1
 sudo svnserve -d -r svn/repos
 ```
 
+### 7. 폴더만들기
+```
+sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/branches --username=admin
+sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/trunk --username=admin
+sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/tags --username=admin
+```
+
 
