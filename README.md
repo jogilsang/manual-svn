@@ -13,7 +13,7 @@ cd repos
 ls -lt  
   
 ### conf/svnserv.conf
-```conf
+```yaml
 #인증되지않은(즉 계정이 없는) 사용자에 대해 접근
 anon-access = read
 
