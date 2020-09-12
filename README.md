@@ -12,7 +12,7 @@ sudo svnadmin create --fs-type fsfs repos
 cd repos  
 ls -lt  
   
-### conf/svnserv.conf
+### 1. conf/svnserv.conf
 ```yaml
 #인증되지않은(즉 계정이 없는) 사용자에 대해 접근
 anon-access = read
@@ -27,15 +27,23 @@ password-db = passwd
 authz-db = authz
 ```
 
-### conf/passwd
+### 2. conf/passwd
 ```
 admin=admin
 guest=guest
 ```
 
-### conf/authz
+### 3. conf/authz
 ```
 [/]
 admin=rw
 guest=r
 ```
+
+### 4. SVN_EDITOR
+```
+SVN_EDITOR=/usr/bin/vim
+export SVN_EDITOR
+```
+
+
