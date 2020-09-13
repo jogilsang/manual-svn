@@ -2,6 +2,9 @@
 https://zetawiki.com/wiki/Svnserve_%EC%8B%9C%EC%9E%91/%EC%A4%91%EC%A7%80
 https://zetawiki.com/wiki/CentOS_%EC%84%9C%EB%B8%8C%EB%B2%84%EC%A0%84_%EC%84%9C%EB%B2%84_%EC%84%A4%EC%B9%98_%EB%B0%8F_%EC%84%A4%EC%A0%95_(svn)
 
+SVN 튜토리얼 :  
+https://www.joinc.co.kr/w/Site/SVN/Tutorial  
+
 ### 포트
 ```
 http:// 로 시작 하면 80번 포트를 열어야 합니다.
@@ -75,9 +78,15 @@ sudo svnserve -d -r svn/repos
 
 ### 7. 폴더만들기
 ```
-sudo svn mkdir --parents svn://localhost/repos/branches --username admin
+trunk : 프로젝트는 trunk에서 시작, GIT Master branch
 sudo svn mkdir --parents svn://localhost/repos/trunk --username admin
+
+branches : trunk에서 복사되서 새로 만들어진 프로젝트.
+sudo svn mkdir --parents svn://localhost/repos/branches --username admin
+
+tag : 특정 시간을 가리키는 포인터. 릴리즈 주기에 맞춰서, 각 주기의 코드를 보존하기 위해 사용
 sudo svn mkdir --parents svn://localhost/repos/tags --username admin
+
 ctr+x
 c
 ```
@@ -103,4 +112,14 @@ svn import myproject svn://localhost/repos/trunk --username admin
 sudo vi hello.c
 sudo svn commit --username admin
 ```
+
+### 11. add : 신규 파일 넣기
+```
+sudo vi README.txt
+sudo svn add README.txt 
+sudo svn commit -m "added : README.txt"
+```
+
+### 12. branch 생성하기
+
 
