@@ -64,7 +64,7 @@ export SVN_EDITOR=/usr/bin/vi
 ### 5. SVN 권한부여 및 시작
 ```
 sudo adduser svn
-// svn 권한 폴더할당
+sudo chown -R svn:svn svn/repos
 sudo chmod -R 777 svn
 sudo svnserve -d -r svn/repos
 ```
