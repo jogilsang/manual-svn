@@ -53,3 +53,9 @@ notification : post-commit, post-revprop-change
 validation : start-commit, pre-commit 규칙을 통해 커밋완료 전 검증
 replication :  pre-revprop-change, 저장소 복제할 경우
 ```
+
+```
+커밋 메시지는 10자 이상이어야 한다.
+커밋 메시지안에는 이슈 관리 시스템과 연동하기 위한 식별 가능한 유일한 이슈번호(12장에서 기술)가 들어 있어야 한다.
+(Redmine의 경우 숫자만, JIRA의 경우 식별자와-일련번호)
+```
