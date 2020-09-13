@@ -24,7 +24,7 @@ ls -lt
 
 ### 설치 후 세팅  
 ### 1. conf/svnserv.conf
-```yaml
+```
 #인증되지않은(즉 계정이 없는) 사용자에 대해 접근
 anon-access = read
 
@@ -44,25 +44,25 @@ authz-db = authz
 
 ### 2. conf/passwd
 ```
-admin=admin
-guest=guest
+admin=1234
+guest=1234
 ```
 
 ### 3. conf/authz
 ```
 [/]
 admin=rw
-guest=r
+guest=rw
+*=rw
 ```
 
-### 4. SVN_EDITOR
-```
-SVN_EDITOR=/usr/bin/vim
-export SVN_EDITOR
-```
 
-### 5. SVN 시작
+
+### 5. SVN 권한부여 및 시작
 ```
+sudo adduser svn
+// svn 권한 폴더할당
+sudo chmod -R 777 svn
 sudo svnserve -d -r svn/repos
 ```
 
@@ -75,13 +75,14 @@ sudo svnserve -d -r svn/repos
 
 ### 7. 폴더만들기
 ```
-sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/branches --username=admin
-sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/trunk --username=admin
-sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/tags --username=admin
+sudo svn mkdir --parents svn://localhost/repos/branches --username admin
+sudo svn mkdir --parents svn://localhost/repos/trunk --username admin
+sudo svn mkdir --parents svn://localhost/repos/tags --username admin
 ```
 
 ### 8. checkout
 ```
 svn checkout --username admin --password 1234 svn://localhost/repos
+svn update
 ```
 
