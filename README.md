@@ -78,6 +78,8 @@ sudo svnserve -d -r svn/repos
 sudo svn mkdir --parents svn://localhost/repos/branches --username admin
 sudo svn mkdir --parents svn://localhost/repos/trunk --username admin
 sudo svn mkdir --parents svn://localhost/repos/tags --username admin
+ctr+x
+c
 ```
 
 ### 8. checkout
