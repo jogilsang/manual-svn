@@ -82,9 +82,23 @@ ctr+x
 c
 ```
 
-### 8. checkout
+### 8. checkout : 최초에 프로젝트를 받아오는 작업 (git clone)
 ```
 svn checkout --username admin --password 1234 svn://localhost/repos
 svn update
+```
+
+### 9. import : 코드를 올리는 작업. 프로젝트 올리기
+```
+mkdir myproject
+sudo vi helloword.c
+int main(int argc, char **argv)
+{
+	printf("Hello World!!!\n");
+}
+svn import myproject svn://localhost/repos/trunk --username admin
+```
+### 10. commit : 수정내역을 반영해서 올리는 것
+```
 ```
 
