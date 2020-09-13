@@ -47,3 +47,9 @@ Pre-lock
 Post-lock
 파일이 잠긴 후에 호출됩니다.
 ```
+
+```
+notification : post-commit, post-revprop-change 
+validation : start-commit, pre-commit 규칙을 통해 커밋완료 전 검증
+replication :  pre-revprop-change, 저장소 복제할 경우
+```
