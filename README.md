@@ -80,4 +80,8 @@ sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3
 sudo svn mkdir --parents svn://ec2-3-18-174-45.us-east-2.compute.amazonaws.com:3690/repos/tags --username=admin
 ```
 
+### 8. checkout
+```
+svn checkout --username admin --password 1234 svn://localhost/repos
+```
 
