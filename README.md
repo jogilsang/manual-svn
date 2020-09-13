@@ -97,6 +97,12 @@ svn checkout --username admin --password 1234 svn://localhost/repos
 svn update
 ```
 
+### *** 1. error (line19 : Authentication Error)
+```
+1. link에 username을 안넣은경우
+2. svnserv.conf, passwd, authz 파일내용 이상한경우 (vi로 한번씩 다 켜보기)
+```
+
 ### 9. import : 코드를 올리는 작업. 프로젝트 올리기
 ```
 mkdir myproject
