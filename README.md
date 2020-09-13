@@ -55,8 +55,8 @@ admin=rw
 guest=rw
 *=rw
 ```
-
-
+### 4. 에디터 변경하기
+export SVN_EDITOR=/usr/bin/vi  
 
 ### 5. SVN 권한부여 및 시작
 ```
