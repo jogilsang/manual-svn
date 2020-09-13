@@ -100,5 +100,7 @@ svn import myproject svn://localhost/repos/trunk --username admin
 ```
 ### 10. commit : 수정내역을 반영해서 올리는 것
 ```
+sudo vi hello.c
+sudo svn commit --username admin
 ```
 
