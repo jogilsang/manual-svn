@@ -4,7 +4,7 @@
 # soure of link : https://github.com/tinyspeck/services-examples/blob/master/subversion.pl
 # modifyed source of link : https://blog.hkwon.me/slack-subversion-intergration/
 
-# Copyright 2013 Tiny Speck, Inc
+# Copyright 2020 CHO_GILSANG
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,20 +50,11 @@ use HTTP::Status qw(is_client_error);
 use LWP::UserAgent;
 use JSON;
 
-# use Encode qw( decode );
-# use Encode qw( decode encode );
 # 한글 사용을 위해 추가
 use Encode;
 
-# use utf8;
-# use Encode;
-
-#
-# Customizable vars. Set these to the information for your team
-#
-
-my $opt_domain = "elandfbo2.slack.com"; # Your team's domain
-my $opt_token = "yatrXvAe12qQidagF9250By8"; # The token from your SVN services page
+my $opt_domain = ""; # Your team's domain
+my $opt_token = ""; # The token from your SVN services page
 
 #
 # this script gets called by the SVN post-commit handler
