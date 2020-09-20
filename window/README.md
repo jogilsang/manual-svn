@@ -1,4 +1,5 @@
-
+### Perl 인코딩, 디코딩
+http://gypark.pe.kr/wiki/Perl/%ED%95%9C%EA%B8%80
 
 ### SVN BOOK
 http://svnbook.red-bean.com/
