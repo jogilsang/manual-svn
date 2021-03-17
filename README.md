@@ -133,6 +133,23 @@ sudo svn add README.txt
 sudo svn commit -m "added : README.txt"
 ```
 
-### 12. branch 생성하기
-
+### 12. branch/Tag 생성하기
+#### branch,tag는 사실상 동일
+```
+우클릭
+1. Branch/Tag : 브런치나 태그를 생성
+2. Merge - Reintegrate Branch
+- working copy = main
+- Update 행위진행
+- Conflict : 동일한 파일 동일한 지점 동일한 맥락으로 수정
+- choose item : 양자택일
+- preper local : 로컬(Trunk)을 선택한다.
+- prefer repository : 브런치를 선택한다.
+- edit conflict ; 충돌해결
+- resolve later : 나중에
+- resolve later all : 전부 나중에
+수정 후 resolved 버튼 클릭하기 -> commit 진행
+3. Switch : 로컬 브런치(Trunk)를 생성한 브런치로 변경
+4. Checkout : 신규 브런치를 로컬로 가져옴
+```
 
