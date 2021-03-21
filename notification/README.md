@@ -59,3 +59,21 @@ replication :  pre-revprop-change, 저장소 복제할 경우
 커밋 메시지안에는 이슈 관리 시스템과 연동하기 위한 식별 가능한 유일한 이슈번호(12장에서 기술)가 들어 있어야 한다.
 (Redmine의 경우 숫자만, JIRA의 경우 식별자와-일련번호)
 ```
+
+```
+# Post-commit
+# $ARGV[0] = PATH
+# $ARGV[1] = DEPTH
+# $ARGV[2] = MESSAGEFILE
+# $ARGV[3] = REVISION
+# $ARGV[4] = ERROR
+# $ARGV[5] = CWD
+
+# Post-update
+# $ARGV[0] = PATH
+# $ARGV[1] = DEPTH
+# $ARGV[2] = REVISION
+# $ARGV[3] = ERROR
+# $ARGV[4] = CWD
+# $ARGV[5] = RESULTPATH
+```
