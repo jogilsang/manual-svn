@@ -82,7 +82,7 @@ chomp $who;
 # added 파일들과 revision 번호
 my $revision = $files.'['.$ARGV[1].']';
 
-my @cats = split / U /, $revision;
+my @cats = split / /, $revision;
 my $result = join("\n", @cats);
 $revision = $result;
 
