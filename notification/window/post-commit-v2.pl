@@ -19,6 +19,7 @@
 #                 (2) U,A,D $
 #                 (3) commit 시간 추가 (svnlook date -r [revision] [path])
 #                 (4) branch 별도분리 표기 및 path이력에서 제거
+#                 (5) 단일 repo 
 
 use warnings;
 use strict;
@@ -201,49 +202,60 @@ if($#arr_D_files+1 > 0) {
     push @{$payload -> {"attachments"} -> [0] -> {"blocks"}}, $section_d;
 }
 
-# assets
-my $repo1 = 'api';
-# my $repo2 = 'mobile';
-# my $repo3 = 'web';
-# my $repo4 = 'web';
-
+# CASE 1 : 단일 repository로 알람생성
 # TODO : 인커밍 웹훅 주소넣기
-my $slack_url_repo1 = "https://hooks.slack.com/services/....";
-# my $slack_url_repo2 = "https://hooks.slack.com/services/....";
-# my $slack_url_repo3 = "https://hooks.slack.com/services/....";
-# my $slack_url_repo4 = "https://hooks.slack.com/services/....";
-
-# my @arr = ($repo1, $repo2, $repo3);
-# my @arr_url = ($slack_url_repo1, $slack_url_repo3, $slack_url_repo4);
-my @arr = ($repo1);
-my @arr_url = ($slack_url_repo1);
 
 my $ua = LWP::UserAgent->new;
 $ua->timeout(15);
 
-# repository 검색시작
-foreach my $index ( 0 .. $#arr ) {
+my $slack_url = "https://hooks.slack.com/services/....";
+my $req = POST( "$slack_url", ['payload' => encode_json($payload)] );
+
+my $s = $req->as_string;
+print STDERR "Request:\n$s\n";
+
+my $resp = $ua->request($req);
+$s = $resp->as_string;
+print STDERR "Response:\n$s\n";
+
+# CASE 2 : repository가 여러개여서, 알람을 따로따로 받아야하는경우
+# my $repo1 = 'api';
+# my $repo2 = 'mobile';
+# my $repo3 = 'web';
+
+# my $slack_url_repo1 = "https://hooks.slack.com/services/....";
+# my $slack_url_repo2 = "https://hooks.slack.com/services/....";
+# my $slack_url_repo3 = "https://hooks.slack.com/services/....";
+
+# my @arr = ($repo1, $repo2, $repo3);
+# my @arr_url = ($slack_url_repo1, $slack_url_repo3);
+
+# my $ua = LWP::UserAgent->new;
+# $ua->timeout(15);
+
+# # repository 검색시작
+# foreach my $index ( 0 .. $#arr ) {
   
-  # repo 경로가 조건값
-  my $condition = $arr[$index];
+#   # repo 경로가 조건값
+#   my $condition = $arr[$index];
 
-  # 만약 repo 경로가, 전체경로에 포함되어있다면
-  if(index($svn_changes, $condition) > 0) {
+#   # 만약 repo 경로가, 전체경로에 포함되어있다면
+#   if(index($svn_changes, $condition) > 0) {
 
-    my $target_url = $arr_url[$index];
-    my $req = POST( "$target_url", ['payload' => encode_json($payload)] );
+#     my $target_url = $arr_url[$index];
+#     my $req = POST( "$target_url", ['payload' => encode_json($payload)] );
 
-    my $s = $req->as_string;
-    print STDERR "Request:\n$s\n";
+#     my $s = $req->as_string;
+#     print STDERR "Request:\n$s\n";
 
-    my $resp = $ua->request($req);
-    $s = $resp->as_string;
-    print STDERR "Response:\n$s\n";
+#     my $resp = $ua->request($req);
+#     $s = $resp->as_string;
+#     print STDERR "Response:\n$s\n";
 
-    last; # break;
+#     last; # break;
 
-  }else {
+#   }else {
 
-  }
+#   }
 
-}
+# }
