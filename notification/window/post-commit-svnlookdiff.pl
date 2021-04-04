@@ -51,7 +51,7 @@ my $svn_diff = $diff;
 my $slack_channels = ""; # 채널이름 혹은 채널코드
 my $slack_filename = $svn_revision.'_'.$svn_author; 
 my $slack_filetype = "diff";
-my $slack_initial_comment = ":bulb: ".$svn_author.` [`.$svn_revision.`]`."\n".$svn_message;
+my $slack_initial_comment = ":bulb: ".$svn_author." [".$svn_revision."]"."\n".$svn_message;
 my $slack_title = $svn_revision.'_'.$svn_author;
 
 SlackAPI_files_upload($slack_channels, $svn_diff, $slack_filename,$slack_filetype, $slack_initial_comment,$slack_title);
