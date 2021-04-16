@@ -14,17 +14,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-use warnings;
-use strict;
+#!perl
+
+# EXEC
+# chcp 65001 && svnlook diff -r 210 D:\project\svn\test --no-diff-added --no-diff-deleted 
+
+# created : v1, 2021-04-08
+# 1. 한글파일명에 업데이트 시, ERROR 발생
+# 2. 한글 메세지가 포함된 svnlook log와 병행사용불가
+# 3. 대상은 UTF-8 파일 사용권장 
+# modifyed : v2 , 2021-04-08
+#               1. 채널분류 추가
+#            v3, 2021-04-08
+#               1. 에러 시 로그파일추가
+#            v4, 2021-04-09
+#               1. cp949 추가
+#            v5, 2021-04-09
+#               1. svnlook changed 제거
+#            v6, 2021-04-13
+#               1. chcp 65001 (UTF-8) diff 적용완료
+
+use utf8;      # so literals and identifiers can be in UTF-8
+use v5.12;     # or later to get "unicode_strings" feature
+use strict;    # quote strings, declare variables
+use warnings;  # on by default
+use warnings  qw(FATAL utf8);    # fatalize encoding glitches
+use open      qw(:std :encoding(UTF-8)); # undeclared streams in UTF-8
+use charnames qw(:full :short);  # unneeded in v5.16
+use Encode qw(decode);
 
 use HTTP::Request::Common qw(POST);
 use HTTP::Status qw(is_client_error);
 use LWP::UserAgent;
 use JSON;
 
-# 한글 사용을 위해 추가
-use Encode;
-use Encode::Guess;
+# END { close STDOUT }
 
 # [0] path to repo
 # [1] revision committed
@@ -32,34 +56,51 @@ use Encode::Guess;
 print $ARGV[0];
 print $ARGV[1];
 
-# Origin
-my $log = `svnlook log -r $ARGV[1] $ARGV[0]`;  # Perl 코드 저장형식에 따라서
-$log = decode("cp949", $log); # cp949 형식으로 decoding이 필요. 한글이 깨짐
-my $who = `svnlook author -r $ARGV[1] $ARGV[0]`;
-chomp $who;
-my $revision = "$ARGV[1]";
-my $diff = `svnlook diff -r $ARGV[1] $ARGV[0] --no-diff-added --no-diff-deleted`;
-$diff = decode("cp949", $diff); 
+my $diff = `chcp 65001 && svnlook diff -r $ARGV[1] $ARGV[0] --no-diff-added --no-diff-deleted`;
 
-# Binding
-my $svn_revision = $revision;
-my $svn_author = $who;
-my $svn_message = $log;
-my $svn_diff = $diff;
+print STDOUT $diff;
 
-# code-snippet-Notification
-my $slack_channels = ""; # 채널이름 혹은 채널코드
-my $slack_filename = $svn_revision.'_'.$svn_author; 
-my $slack_filetype = "diff";
-my $slack_initial_comment = ":bulb: ".$svn_author." [".$svn_revision."]"."\n".$svn_message;
-my $slack_title = $svn_revision.'_'.$svn_author;
+if(length $diff) {
 
-SlackAPI_files_upload($slack_channels, $svn_diff, $slack_filename,$slack_filetype, $slack_initial_comment,$slack_title);
+    # Origin
+    # Active code page: 949 deleted
+    my $log = `chcp 65001 && svnlook log -r $ARGV[1] $ARGV[0]`;
+    my @cats = split /\n/, $log;
+    my $firstData = shift(@cats);
+    $log = join "\n", @cats;
 
+    my $who = `svnlook author -r $ARGV[1] $ARGV[0]`;
+    chomp $who;
+    my $revision = "$ARGV[1]";
+
+    # Binding
+    my $svn_log = $log;
+    my $svn_revision = $revision;
+    my $svn_author = $who;
+    my $svn_diff = $diff;
+
+    # code-snippet-Notification
+    # TODO
+    my $slack_channels = "";
+    my @arr_slack_channels = ($slack_channels);
+
+    my $slack_filename = " [".$svn_revision."]".'_'.$svn_author;
+    my $slack_filetype = "diff";
+    my $slack_initial_comment = ":raised_hands: ".$svn_author." [".$svn_revision."]";
+    my $slack_title = " [".$svn_revision."]".'_'.$svn_author;
+
+    my $target_url = $arr_slack_channels[$index];
+    SlackAPI_files_upload($target_url, $svn_diff, $slack_filename,$slack_filetype, $slack_initial_comment,$slack_title);
+    
+    last; # break;
+
+}
+
+# description : https://blog.naver.com/jogilsang/222297392891
 sub SlackAPI_files_upload {
 
-  # TODO : 슬랙 앱 등록 후, scope 설정필요. user token이나 bot token 가져오기
-  my $slack_token = 'xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+  # param
+  my $slack_token = 'xoxb-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
   # Token (Required)
   # $_[0] -> channels (Optional)
@@ -104,11 +145,11 @@ sub SlackAPI_files_upload {
 
     my $body = [
       channels=> "$_[0]", 
-      content=> "$_[1]", 
-      filename=> "$_[2]", 
+      content=> "$_[1]",
+      filename=> "$_[2]".".diff", 
       filetype=> "$_[3]", 
       initial_comment=> "$_[4]", 
-      title=> "$_[5]", 
+      title=> "$_[5]".".diff", 
     ];
     my $url = "https://slack.com/api/files.upload";
     my $req = POST $url, $body ;
@@ -123,4 +164,28 @@ sub SlackAPI_files_upload {
     $s = $res->as_string;
     print STDERR "Response:\n$s\n";
 
+}
+
+# source : http://www.perl.or.kr/tipsinaction/control_flow/warn2log
+BEGIN {
+	$SIG{'__WARN__'} = sub {
+		my($sec,$min,$hour,$mday,$mon,$year,$wday) = localtime();
+
+        # TODO : 로그파일경로 지정
+	      my $path = "D:\/project\/svn\/test\/hooks\/log\/";
+        my $logfile = $path."svn.$wday.log";
+
+		if( (-M $logfile) > 3 ) {
+			unlink($logfile);
+		}
+
+		if(open(LOG,">>$logfile")) {
+			# 날짜, process id와 함께 기록한다.
+			print LOG "$$ : ", scalar(localtime()), " ", @_;
+			print LOG "$$ : ", scalar(localtime()), " ", $diff;
+			close LOG;
+		}
+		warn @_; # 필요없다면 빼줍니다.
+		# 재귀적으로 핸들러를 호출하지 않으므로 걱정마세요.
+	};
 }
