@@ -60,7 +60,7 @@ my $svn_revision = $revision;
 my $svn_author = $who;
 my $svn_message = $log;
 my $svn_branch = '';
-my $svn_url = "https://jira.eland.co.kr/projects/FASS/summary"; 
+my $svn_url = "https://******"; 
 my $svn_changes = $files;
 
 # 브런치 값을 추출한다.
