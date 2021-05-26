@@ -7,6 +7,8 @@ FROM=${BASE_PATH}/trunk
 TO=${BASE_PATH}/tags/${VERSION_TAG}
 svn copy ${FROM} ${TO} --username ${SVN_USER} --password ${SVN_PASS} -m "Creating ${TO} from ${FROM}"
 ```
+SVN 태깅 자동화를위한 Jenkins Job   
+Reference : http://www.coolio.so/jenkins-build-with-parameters-%EC%83%9D%EC%84%B1tags-branches/
 
 ## svnlook
 ### svnlook history
