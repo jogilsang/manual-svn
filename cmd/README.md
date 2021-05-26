@@ -1,5 +1,12 @@
 
+## [svn tagging auto](http://developerautomation.com/jenkins-job-automate-svn-tagging/)
 
+```shell
+VERSION_TAG=my_special_version-${VERSION}
+FROM=${BASE_PATH}/trunk
+TO=${BASE_PATH}/tags/${VERSION_TAG}
+svn copy ${FROM} ${TO} --username ${SVN_USER} --password ${SVN_PASS} -m "Creating ${TO} from ${FROM}"
+```
 
 ## svnlook
 ### svnlook history
